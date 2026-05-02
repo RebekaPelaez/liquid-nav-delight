@@ -8,8 +8,11 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 42 30% 94%;
+    --foreground: 210 25% 18%;
+    --nav-surface: 40 25% 88%;
+    --nav-glow: 35 80% 70%;
+    --nav-active: 200 60% 45%;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -101,5 +104,61 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
   }
+}
+
+@layer utilities {
+  .liquid-glass {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--nav-surface) / 0.65) 0%,
+      hsl(var(--nav-surface) / 0.35) 50%,
+      hsl(var(--nav-surface) / 0.55) 100%
+    );
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid hsl(0 0% 100% / 0.4);
+    box-shadow:
+      inset 0 1px 0 0 hsl(0 0% 100% / 0.6),
+      inset 0 -1px 0 0 hsl(0 0% 0% / 0.05),
+      0 10px 40px -10px hsl(210 25% 18% / 0.15),
+      0 4px 12px -4px hsl(210 25% 18% / 0.1);
+  }
+
+  .liquid-bubble {
+    background: radial-gradient(
+      circle at 30% 30%,
+      hsl(0 0% 100% / 0.9) 0%,
+      hsl(var(--nav-glow) / 0.4) 40%,
+      hsl(var(--nav-active) / 0.2) 100%
+    );
+    backdrop-filter: blur(12px);
+    box-shadow:
+      inset 0 2px 4px hsl(0 0% 100% / 0.8),
+      inset 0 -2px 4px hsl(var(--nav-active) / 0.2),
+      0 8px 24px -4px hsl(var(--nav-active) / 0.4),
+      0 0 20px hsl(var(--nav-glow) / 0.5);
+  }
+
+  .nav-icon-glow {
+    filter: drop-shadow(0 2px 4px hsl(var(--nav-active) / 0.3));
+  }
+}
+
+@keyframes liquid-morph {
+  0%, 100% { border-radius: 50% 50% 50% 50%; transform: scale(1) rotate(0deg); }
+  25% { border-radius: 60% 40% 55% 45%; transform: scale(1.05) rotate(2deg); }
+  50% { border-radius: 45% 55% 50% 50%; transform: scale(1.02) rotate(-1deg); }
+  75% { border-radius: 55% 45% 45% 55%; transform: scale(1.03) rotate(1deg); }
+}
+
+@keyframes ripple-out {
+  0% { transform: scale(0.4); opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes float-up {
+  0% { transform: translateY(8px) scale(0.6); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
 }
