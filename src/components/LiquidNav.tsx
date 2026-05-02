@@ -57,8 +57,8 @@ export const LiquidNav = () => {
   const activeIndex = items.findIndex((i) => i.id === active);
 
   // Peak stretch scales — bigger jump = more stretch mid-flight
-  const peakY = Math.min(1.2 + travelDistance * 0.18, 2.1);
-  const peakX = Math.max(0.85 - travelDistance * 0.06, 0.6);
+  const peakY = Math.min(1.6 + travelDistance * 0.32, 3.2);
+  const peakX = Math.max(0.7 - travelDistance * 0.08, 0.4);
 
   return (
     <nav
@@ -70,14 +70,14 @@ export const LiquidNav = () => {
         className="pointer-events-none absolute left-1/2 h-12 w-12 -translate-x-1/2"
         style={{
           top: `calc(0.75rem + ${activeIndex} * (3rem + 0.5rem))`,
-          transition: "top 0.6s cubic-bezier(0.65, 0, 0.35, 1)",
+          transition: "top 0.75s cubic-bezier(0.45, 0.05, 0.25, 1)",
         }}
       >
         <div
           key={moveKey}
           className="h-full w-full liquid-bubble"
           style={{
-            animation: `liquid-morph 6s ease-in-out infinite, blob-stretch 0.6s cubic-bezier(0.65, 0, 0.35, 1)`,
+            animation: `liquid-morph 6s ease-in-out infinite, blob-stretch 0.75s cubic-bezier(0.45, 0.05, 0.25, 1)`,
             // Expose peak scales to the keyframe via CSS vars
             ["--peak-y" as string]: peakY,
             ["--peak-x" as string]: peakX,
