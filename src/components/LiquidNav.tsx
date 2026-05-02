@@ -60,18 +60,6 @@ export const LiquidNav = () => {
   const peakY = Math.min(1.6 + travelDistance * 0.32, 3.2);
   const peakX = Math.max(0.7 - travelDistance * 0.08, 0.4);
 
-  // Hover lean: bubble reaches toward the hovered item before click
-  const hoveredIndex = hovered ? items.findIndex((i) => i.id === hovered) : -1;
-  const hoverDelta =
-    hoveredIndex >= 0 && hoveredIndex !== activeIndex
-      ? hoveredIndex - activeIndex
-      : 0;
-  const itemStride = 56; // 3rem (48px) + 0.5rem (8px) gap
-  // Reach ~30% of the way toward the hovered item
-  const leanOffset = hoverDelta * itemStride * 0.3;
-  const leanStretchY = hoverDelta !== 0 ? 1 + Math.min(Math.abs(hoverDelta) * 0.12, 0.4) : 1;
-  const leanSquashX = hoverDelta !== 0 ? 1 - Math.min(Math.abs(hoverDelta) * 0.05, 0.2) : 1;
-
   return (
     <nav
       aria-label="Primary"
@@ -79,13 +67,10 @@ export const LiquidNav = () => {
     >
       {/* Floating liquid blob that follows the active item */}
       <div
-        className="pointer-events-none absolute left-1/2 h-12 w-12"
+        className="pointer-events-none absolute left-1/2 h-12 w-12 -translate-x-1/2"
         style={{
           top: `calc(0.75rem + ${activeIndex} * (3rem + 0.5rem))`,
-          transition:
-            "top 0.75s cubic-bezier(0.45, 0.05, 0.25, 1), transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1)",
-          transform: `translateX(-50%) translateY(${leanOffset}px) scale(${leanSquashX}, ${leanStretchY})`,
-          transformOrigin: hoverDelta > 0 ? "center top" : hoverDelta < 0 ? "center bottom" : "center",
+          transition: "top 0.75s cubic-bezier(0.45, 0.05, 0.25, 1)",
         }}
       >
         <div
@@ -98,7 +83,6 @@ export const LiquidNav = () => {
             ["--peak-x" as string]: peakX,
           }}
         />
-
       </div>
 
       {items.map(({ id, label, Icon }) => {
