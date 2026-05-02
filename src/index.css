@@ -8,11 +8,11 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 42 30% 94%;
-    --foreground: 210 25% 18%;
-    --nav-surface: 40 25% 88%;
-    --nav-glow: 35 80% 70%;
-    --nav-active: 200 60% 45%;
+    --background: 35 40% 92%;
+    --foreground: 220 30% 12%;
+    --nav-surface: 35 50% 96%;
+    --nav-glow: 28 95% 62%;
+    --nav-active: 340 85% 58%;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
