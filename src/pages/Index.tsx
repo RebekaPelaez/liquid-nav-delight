@@ -2,7 +2,7 @@ import { LiquidNav } from "@/components/LiquidNav";
 
 const Index = () => {
   return (
-    <main className="dark relative min-h-screen overflow-hidden bg-background">
+    <main className="relative min-h-screen overflow-hidden bg-background">
       {/* Soft ambient background blobs */}
       <div className="pointer-events-none absolute inset-0">
         <div
