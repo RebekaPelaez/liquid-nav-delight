@@ -1,5 +1,4 @@
-import { useState, useRef, MouseEvent } from "react";
-import { Home, Menu, User, Moon, Search, Heart } from "lucide-react";
+import { useState, useRef, MouseEvent, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
