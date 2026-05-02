@@ -27,7 +27,7 @@ export const LiquidNav = () => {
   const [active, setActive] = useState("home");
   const [hovered, setHovered] = useState<string | null>(null);
   const [ripples, setRipples] = useState<Record<string, Ripple[]>>({});
-  const [isMoving, setIsMoving] = useState(false);
+  const [moveKey, setMoveKey] = useState(0);
   const [travelDistance, setTravelDistance] = useState(0);
   const rippleId = useRef(0);
   const prevIndexRef = useRef(0);
@@ -43,7 +43,7 @@ export const LiquidNav = () => {
     const newIndex = items.findIndex((i) => i.id === id);
     setTravelDistance(Math.abs(newIndex - prevIndexRef.current));
     prevIndexRef.current = newIndex;
-    setIsMoving(true);
+    setMoveKey((k) => k + 1);
     setActive(id);
 
     setTimeout(() => {
@@ -54,18 +54,11 @@ export const LiquidNav = () => {
     }, 700);
   };
 
-  // Release squash after the travel animation completes
-  useEffect(() => {
-    if (!isMoving) return;
-    const t = setTimeout(() => setIsMoving(false), 650);
-    return () => clearTimeout(t);
-  }, [isMoving, active]);
-
   const activeIndex = items.findIndex((i) => i.id === active);
 
-  // Stretch along travel axis (Y) while moving — more stretch for longer jumps
-  const stretchY = isMoving ? Math.min(1.15 + travelDistance * 0.12, 1.7) : 1;
-  const squashX = isMoving ? Math.max(0.92 - travelDistance * 0.05, 0.7) : 1;
+  // Peak stretch scales — bigger jump = more stretch mid-flight
+  const peakY = Math.min(1.2 + travelDistance * 0.18, 2.1);
+  const peakX = Math.max(0.85 - travelDistance * 0.06, 0.6);
 
   return (
     <nav
@@ -77,14 +70,18 @@ export const LiquidNav = () => {
         className="pointer-events-none absolute left-1/2 h-12 w-12 -translate-x-1/2"
         style={{
           top: `calc(0.75rem + ${activeIndex} * (3rem + 0.5rem))`,
-          transition:
-            "top 0.6s cubic-bezier(0.5, 1.6, 0.4, 1), transform 0.6s cubic-bezier(0.5, 1.6, 0.4, 1)",
-          transform: `translateX(-50%) scale(${squashX}, ${stretchY})`,
+          transition: "top 0.6s cubic-bezier(0.65, 0, 0.35, 1)",
         }}
       >
         <div
+          key={moveKey}
           className="h-full w-full liquid-bubble"
-          style={{ animation: "liquid-morph 6s ease-in-out infinite" }}
+          style={{
+            animation: `liquid-morph 6s ease-in-out infinite, blob-stretch 0.6s cubic-bezier(0.65, 0, 0.35, 1)`,
+            // Expose peak scales to the keyframe via CSS vars
+            ["--peak-y" as string]: peakY,
+            ["--peak-x" as string]: peakX,
+          }}
         />
       </div>
 
