@@ -59,8 +59,12 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 189 50% 8%;
+    --foreground: 180 20% 95%;
+    --nav-surface: 189 54% 12%;
+    --nav-glow: 189 70% 45%;
+    --nav-active: 189 80% 55%;
+    --muted-foreground: 189 15% 65%;
 
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
